@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Супер блог Неандертальца</title>
+    <meta name="viewport" content="width=devise-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+    {% include 'registration_modal.html' %}
+    {% include 'login_modal.html' %}
+</head>
+<body>
+<div class="g-image"
+     style="background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(192,192,192,1) 50%, rgba(2,0,36,1) 100%); background-size: 100%; height: 120vh; overflow: auto">
+    <header>
+        {% block mainmenu %}
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/">Супер блог Неандертальца</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Переключатель навигации">
+                        <span class="navbar-toggle-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/about">О блоге</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">Разделы</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                                    <li><a class="dropdown-item" href="/science">Наука</a></li>
+                                    <li><a class="dropdown-item" href="/entertainment">Развлечения</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="/neanderthal">О Неандертальцах</a></li>
+                                </ul>
+                            </li>
+                            {% if request.user.is_authenticated %}
+                                <li class="nav-item">
+                                    <a class="nav-link disabled" STYLE="color: white;">Логин: {{ user.username }}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Выход</a>
+                                </li>
+                            {% else %}
+
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#regModal"
+                                       data-bs-toggle="modal">Регистрация</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#logModal"
+                                       data-bs-toggle="modal">Вход</a>
+                                </li>
+                            {% endif %}
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{% url 'LSTM' %}">LSTM</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{% url 'Gradient' %}">Gradient</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{% url 'RNN' %}">RNN</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{% url 'LSTM2' %}">LSTM2</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{% url 'big_search' %}">Расширенный
+                                    поиск</a>
+                            </li>
+                            <div id="google_translate_element"></div>
+
+                            <script type="text/javascript">
+                                function googleTranslateElementInit() {
+                                    new google.translate.TranslateElement({
+                                        pageLanguage: 'ru',
+                                        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+                                    }, 'google_translate_element');
+                                }
+                            </script>
+
+                            <script type="text/javascript"
+                                    src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+                            </script>
+                        </ul>
+                        <form class="d-flex" action="{% url 'search' %}" method="get">
+                            {% csrf_token %}
+                            <input class="form-control me-2" type="search" placeholder="Поиск..."
+                                   aria-label="Search" name="q">
+                            <button class="btn btn-outline-secondary" type="submit">Поиск</button>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+        {% endblock mainmenu %}
+    </header>
+    <div style="margin-top: 1%;">
+        <div class="container-fluid">
+            <div class="row align-items-start">
+                <div class="col">
+                    <div class="bg-image card shadow-1-strong"
+                         style="background: linear-gradient(90deg, rgba(0,36,21,0.92) 0%, rgba(70,6,6,1) 50%, rgba(0,36,21,0.92) 100%);">
+                        <div class="card-body text-white">
+                            <h2 style="color: white"> 😯😯😯КАКАЯ НАУКА😯😯😯....😠😠😠ЯЖ НЕАНДЕРТАЛЕЦ!😠😠😠<!doctype html></h2>
+                            <img src="https://upload.wikimedia.org/wikipedia/ru/4/41/%D0%9D%D0%B5%D0%B0%D0%BD%D0%B4%D0%B5%D1%80%D1%82%D0%B0%D0%BB%D0%B5%D1%86_%D0%B8%D0%B7_%D0%9B%D0%B0-%D0%A4%D0%B5%D1%80%D1%80%D0%B0%D1%81%D0%B8_%D0%B0%D0%BD%D1%84%D0%B0%D1%81%2C_%D0%93%D0%B5%D1%80%D0%B0%D1%81%D0%B8%D0%BC%D0%BE%D0%B2_%D0%9C.%D0%9C..JPG"
+                                 alt="Неандерталец" width="68%">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2></h2>
+    <a href="{% url 'home' %}" class="btn" style="color: black; background: white; position: absolute; left: 1%"><</a>
+</div>
+</body>
+</html>

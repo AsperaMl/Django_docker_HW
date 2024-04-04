@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Супер блог Неандертальца | Полиномиальная регрессия</title>
+    <meta name="viewport" content="width=devise-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+    {% include 'registration_modal.html' %}
+    {% include 'login_modal.html' %}
+</head>
+<body>
+<div class="g-image"
+     style="background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(192,192,192,1) 50%, rgba(2,0,36,1) 100%); background-size: 100%; height: 116vh; overflow: auto">
+    <header>
+        {% block mainmenu %}
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/">Супер блог Неандертальца</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Переключатель навигации">
+                        <span class="navbar-toggle-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/about">О блоге</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">Разделы</a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                                    <li><a class="dropdown-item" href="/science">Наука</a></li>
+                                    <li><a class="dropdown-item" href="/entertainment">Развлечения</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="/neanderthal">О Неандертальцах</a></li>
+                                </ul>
+                            </li>
+                            {% if request.user.is_authenticated %}
+                                <li class="nav-item"><a class="nav-link disabled"
+                                                        STYLE="color: white;">Логин: {{ user.username }}</a></li>
+                                <li class="nav-item"><a class="nav-link active" aria-current="page"
+                                                        href="{% url 'logout' %}">Выход</a></li>
+                            {% else %}
+                                <li class="nav-item"><a class="nav-link active" href="#regModal" data-bs-toggle="modal">Регистрация</a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link active" href="#logModal" data-bs-toggle="modal">Вход</a>
+                                </li>
+                            {% endif %}
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{% url 'LSTM' %}">LSTM</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="{% url 'big_search' %}">Расширенный
+                                    поиск</a>
+                            </li>
+                            <div id="google_translate_element"></div>
+
+                            <script type="text/javascript">
+                                function googleTranslateElementInit() {
+                                    new google.translate.TranslateElement({
+                                        pageLanguage: 'ru',
+                                        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+                                    }, 'google_translate_element');
+                                }
+                            </script>
+
+                            <script type="text/javascript"
+                                    src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+                            </script>
+                        </ul>
+                        <form class="d-flex" action="{% url 'search' %}" method="get">
+                            {% csrf_token %}
+                            <input class="form-control me-2" type="search" placeholder="Поиск..."
+                                   aria-label="Search" name="q">
+                            <button class="btn btn-outline-secondary" type="submit">Поиск</button>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+        {% endblock mainmenu %}
+    </header>
+    <div style="margin-top: 1%;">
+        <div class="container-fluid">
+            <div class="row align-items-start">
+                <div class="col">
+                    <div class="bg-image card shadow-1-strong"
+                         style="background: linear-gradient(90deg, rgba(0,36,21,0.92) 0%, rgba(70,6,6,1) 50%, rgba(0,36,21,0.92) 100%);">
+                        <div class="card-body text-white">
+                            <center>
+                                <a href="{% url 'restart_pol_reg' %}" class="btn"
+                                   style="color: black; background: white;"><h3>СДЕЛАТЬ ПРОГНОЗ</h3></a>
+                                <h1>
+                                    __________________________________________________________________________________________________</h1>
+                                <form method="post">
+                                    {% csrf_token %}
+                                </form>
+                                {% if DB.count > 0 %}
+                                    <table>
+                                        <thead>
+                                        <th><h1 style="color:white"> | | </h1></th>
+                                        <th><h1 style="color:white">Year</h1></th>
+                                        <th><h1 style="color:white"> | | </h1></th>
+                                        <th><h1 style="color:white">Month</h1></th>
+                                        <th><h1 style="color:white"> | | </h1></th>
+                                        <th><h1 style="color:white">Passengers</h1></th>
+                                        <th><h1 style="color:white"> | | </h1></th>
+                                        <th><h1 style="color:white">Predictions</h1></th>
+                                        <th><h1 style="color:white"> | | </h1></th>
+                                        <th><h1 style="color:white">Error</h1></th>
+                                        <th><h1 style="color:white"> | | </h1></th>
+                                        </thead>
+                                        {% for i in DB %}
+                                            <tr>
+                                                <th><h1 style="color:white"> | | </h1></th>
+                                                <td><h1 style="color:white">{{ i.year }}</h1></td>
+                                                <th><h1 style="color:white"> | | </h1></th>
+                                                <td><h1 style="color:white">{{ i.month }}</h1></td>
+                                                <th><h1 style="color:white"> | | </h1></th>
+                                                <td><h1 style="color:white">{{ i.passengers }}</h1></td>
+                                                <th><h1 style="color:white"> | | </h1></th>
+                                                <td><h1 style="color:white">{{ i.predictions }}</h1></td>
+                                                <th><h1 style="color:white"> | | </h1></th>
+                                                <td><h1 style="color:white">{{ i.wrong_answer }}</h1></td>
+                                                <th><h1 style="color:white"> | | </h1></th>
+                                            </tr>
+                                        {% endfor %}
+                                    </table>
+                                {% endif %}
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h1></h1>
+        </div>
+    </div>
+    <a href="{% url 'home' %}" class="btn" style="color: black; background: white; position: absolute; left: 1%"><</a>
+
+</div>
+</body>
+</html>

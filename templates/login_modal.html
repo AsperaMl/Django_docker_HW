@@ -1,0 +1,26 @@
+<div class="modal fade" id="logModal" tabindex="-1" aria-labelledby=loggModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" style="">
+                <div class="modal-header">
+                    <h1 class="modal-title" id="logModalLabel">Супер блог Неандертальца | Вход</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {% csrf_token %}
+                    <div class="form-error">{{ form1.non_field_errors }}</div>
+                    {% for f in form1 %}
+                        <h3><label class="form-label"
+                                  for="{{ f.id_for_label }} "> {{ f.label }}:</label>{{ f }}</h3>
+                        <div class="form-error">{{ f.errors }}</div>
+                    {% endfor %}
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Войти</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

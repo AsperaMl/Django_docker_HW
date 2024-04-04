@@ -1,0 +1,24 @@
+<div class="modal fade" id="regModal" tabindex="-1" aria-labelledby="regModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        <form method="post" style="">
+            <div class="modal-header">
+                <h1 class="modal-title" id="regModalLabel">Супер блог Неандертальца | Регистрация</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                    {% csrf_token %}
+                    {% for f in form %}
+                        <h3><label class="form-label"
+                                   for="{{ f.id_for_label }} "> {{ f.label }}:</label>{{ f }}</h3>
+                        <div class="form-error">{{ f.errors }}</div>
+                    {% endfor %}
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Зарегестрироваться</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>

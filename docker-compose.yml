@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:5.7
+    ports:
+      - '3307:3306'
+    environment:
+      MYSQL_DATABASE: 'db_django'
+      MYSQL_ROOT_USER: 'root'
+      MYSQL_USER: 'Egor'
+      MYSQL_PASSWORD: 'NeforMAL_1488'
+      MYSQL_ROOT_PASSWORD: 'NeforMAL_1488'
+    restart: always
+    volumes:
+      - ./db_django:/var/lib/mysql
+  web:
+    build: ./web
+    command: python django_work/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/django_work
+    ports:
+      - '8000:8000'
+    depends_on:
+      - db
