@@ -1,6 +1,6 @@
 # DJANGO BLOG Osinskiy A
 
-Диаграмма Ганта: https://docs.google.com/spreadsheets/d/1ynuhvYqWto7j_e877yzo4kw1EmutcgMrxKRelrU8oNw/edit?usp=sharing
+
 
 cd .../dj_test/
 docker-compose build
